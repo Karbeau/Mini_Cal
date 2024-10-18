@@ -4,15 +4,9 @@
 bool is_leap_year(int year) {
     // Year must be divisible by 4
     // Years that are divisible by 100 (1900 is NOT a LY) must be divisible by 400 
-    if (year % 4 == 0 && year % 100 == 0) {
-        if (year % 400 == 0){
-            return true;
-        }
-        return false;
-
-    } else if (year % 4 == 0){
+    if ((year % 4 == 0 && year % 100 == 0) || year % 400 == 0 ){
         return true;
-    } 
+    }
     return false;
 }
 
@@ -28,8 +22,9 @@ void add_days_to_date(int* mm, int* dd, int* yy, int days_left_to_add)
         if(*mm == 02 && is_leap_year(*yy)){
             days_left_in_month++;
         }
-        if(days_left_to_add >= days_left_in_month){
-            days_left_to_add -= days_left_in_month +1;
+        if(days_left_to_add > days_left_in_month){
+            days_left_to_add -= days_left_in_month;
+            days_left_to_add -= 1;
             *dd = 1;
 
             if(*mm == 12){
@@ -60,7 +55,7 @@ int main() {
     int yy;
     int days_left_to_add;
     printf("Enter a date in the format mm dd yy plus anumber of days to add to this date (ex. 05 15 1997 12):");
-    scanf("%d%d%d%d", &mm, &dd, &dd, &days_left_to_add);
+    scanf("%d%d%d%d", &mm, &dd, &yy, &days_left_to_add);
     add_days_to_date(&mm, &dd, &yy, days_left_to_add);
-    printf("%d %d %d", mm, dd, yy);
+    printf("%d %d %d\n", mm, dd, yy);
 }
